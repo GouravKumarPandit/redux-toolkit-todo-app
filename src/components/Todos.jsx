@@ -3,7 +3,9 @@ import { deleteTodo } from "../features/todo/todoSlice";
 import { LuFileEdit } from "react-icons/lu";
 
 function Todos({showEditTodo}) {
-	const todos = useSelector(state => state.todos);
+	let todos = useSelector(() => localStorage.getItem("todos"));
+	todos = JSON.parse(todos)?.todos ? JSON.parse(todos)?.todos : [];
+
 	const dispatch = useDispatch();
 
 	function deleteTodos(todoId){
@@ -19,10 +21,9 @@ function Todos({showEditTodo}) {
 						<div className='text-black'>{todo.todo}</div>
 						<div className='flex'>
 							<button className="text-white bg-indigo-500 border-0 mx-2 px-4 py-2 focus:outline-none hover:bg-indigo-600 rounded text-md"
-								onClick={() => showEditTodo({
-									id: todo.id,
-									todo: todo.todo
-								})}>
+								onClick={() => {
+									showEditTodo({id: todo.id, todo: todo.todo});
+								}}>
 								<LuFileEdit />
 							</button>
 							<button className="text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded text-md"

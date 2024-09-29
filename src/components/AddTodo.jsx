@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { addUpdateTodo } from "../features/todo/todoSlice";
 import { useDispatch } from "react-redux";
 import { LuFileEdit } from "react-icons/lu";
@@ -20,7 +20,9 @@ function AddTodo({editTodo}) {
 			todo: todo
 		}
 		dispatch(addUpdateTodo(editTodoSave));
+		editTodo.todo = "";
 		setTodo("");
+		setEditCount(false);
 	}
 
 	return (
@@ -38,7 +40,7 @@ function AddTodo({editTodo}) {
 				type="submit"
 				className="text-white bg-indigo-500 border-0 py-2 px-6 w-[160px] focus:outline-none hover:bg-indigo-600 rounded text-lg"
 			>
-				{(editTodo.todo && todo != "") ? (<div className="flex justify-around items-center"><LuFileEdit /> {`Edit Todo`}</div>) : (<span className="text-xl">+ Add Todo</span>) }
+				{editTodo.todo ? (<div className="flex justify-around items-center"><LuFileEdit /> {`Edit Todo`}</div>) : (<span className="text-xl">+ Add Todo</span>) }
 			</button>
 		</form>
 	)
